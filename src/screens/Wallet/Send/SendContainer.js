@@ -293,7 +293,7 @@ class SendContainer extends React.Component {
     } = this.props.navigation.state.params
     if (this.state.fee !== null) {
       const fee =
-        this.state.feeEstimation && this.state.feeEstimation * this.state.feeMultiplier
+        this.state.feeEstimation && this.state.defaultFee * this.state.feeMultiplier
       const tokenPrice =
         (prices &&
           this.state.selectedToken &&
@@ -368,6 +368,7 @@ class SendContainer extends React.Component {
           this.setState({
             feeEstimation,
             fee: feeEstimation,
+            defaultFee: feeEstimation,
             feeInCurrency: newFeePrice,
           }, () => {
             updateBitcoinTxDraftFee({
