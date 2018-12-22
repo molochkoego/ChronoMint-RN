@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -31,6 +30,8 @@
 		AD98EF8D1D35455E84ADB0AD /* libRNLanguages.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E6A51E6B8B0459B9399DA1A /* libRNLanguages.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		F8FF78D9030E490AAA7C18FC /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF067B1981B04543BFE40682 /* libSplashScreen.a */; };
+		331F1A9B605F4A75A03D6C92 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C6396F82B60C4418B68A3DAF /* libRNCamera.a */; };
+		9556196C84E04D6287AF0020 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3FBBD35DD4B40BC996E339D /* libReactNativePermissions.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -404,6 +405,10 @@
 		EACD38778FF3423B8AAFAAC3 /* RNKeychain.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNKeychain.xcodeproj; path = "../node_modules/react-native-keychain/RNKeychain.xcodeproj"; sourceTree = "<group>"; };
 		F30CE03681D94019A720F171 /* TouchID.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
 		FF067B1981B04543BFE40682 /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
+		2446C2A5E5C94FDBA4D8525E /* RNCamera.xcodeproj */ = {isa = PBXFileReference; name = "RNCamera.xcodeproj"; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		C6396F82B60C4418B68A3DAF /* libRNCamera.a */ = {isa = PBXFileReference; name = "libRNCamera.a"; path = "libRNCamera.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		153F5AAFC4A744249FF90906 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativePermissions.xcodeproj"; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		C3FBBD35DD4B40BC996E339D /* libReactNativePermissions.a */ = {isa = PBXFileReference; name = "libReactNativePermissions.a"; path = "libReactNativePermissions.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,6 +442,8 @@
 				3468AE47644C40A4BA8F4926 /* libRNKeychain.a in Frameworks */,
 				713782F518104C669ADBC7FD /* libRNDeviceInfo.a in Frameworks */,
 				6F5B7958D8174FB5B8E09B31 /* libTouchID.a in Frameworks */,
+				331F1A9B605F4A75A03D6C92 /* libRNCamera.a in Frameworks */,
+				9556196C84E04D6287AF0020 /* libReactNativePermissions.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,6 +679,8 @@
 				EACD38778FF3423B8AAFAAC3 /* RNKeychain.xcodeproj */,
 				C49D708822634A24AE736C2B /* RNDeviceInfo.xcodeproj */,
 				F30CE03681D94019A720F171 /* TouchID.xcodeproj */,
+				2446C2A5E5C94FDBA4D8525E /* RNCamera.xcodeproj */,
+				153F5AAFC4A744249FF90906 /* ReactNativePermissions.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1288,12 +1297,16 @@
 					"$(SRCROOT)..\node_modules\neact-native-keychainRNKeychainManager",
 					"$(SRCROOT)..\node_modules\neact-native-device-infoiosRNDeviceInfo",
 					"$(SRCROOT)..\node_modules\neact-native-touch-id",
+					"$(SRCROOT)\..\node_modules\react-native-camera\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-permissions\ios/**",
 				);
 				INFOPLIST_FILE = ChronoMintTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1328,12 +1341,16 @@
 					"$(SRCROOT)..\node_modules\neact-native-keychainRNKeychainManager",
 					"$(SRCROOT)..\node_modules\neact-native-device-infoiosRNDeviceInfo",
 					"$(SRCROOT)..\node_modules\neact-native-touch-id",
+					"$(SRCROOT)\..\node_modules\react-native-camera\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-permissions\ios/**",
 				);
 				INFOPLIST_FILE = ChronoMintTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1368,6 +1385,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-keychainRNKeychainManager",
 					"$(SRCROOT)..\node_modules\neact-native-device-infoiosRNDeviceInfo",
 					"$(SRCROOT)..\node_modules\neact-native-touch-id",
+					"$(SRCROOT)\..\node_modules\react-native-camera\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-permissions\ios/**",
 				);
 				INFOPLIST_FILE = ChronoMint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1395,6 +1414,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-keychainRNKeychainManager",
 					"$(SRCROOT)..\node_modules\neact-native-device-infoiosRNDeviceInfo",
 					"$(SRCROOT)..\node_modules\neact-native-touch-id",
+					"$(SRCROOT)\..\node_modules\react-native-camera\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-permissions\ios/**",
 				);
 				INFOPLIST_FILE = ChronoMint/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
