@@ -185,6 +185,7 @@ export default class SendEth extends PureComponent {
                 onChange={onChangeRecipient}
                 name='recipient'
                 style={styles.textInput}
+                value={recipient}
               />
               <TouchableOpacity
                 onPress={onQRpageOpen}
@@ -236,4 +237,5 @@ SendEth.propTypes = {
   showPasswordModal: PropTypes.bool,
   showConfirmModal: PropTypes.bool,
   error: PropTypes.string,
+  recipient: PropTypes.string,
 }
