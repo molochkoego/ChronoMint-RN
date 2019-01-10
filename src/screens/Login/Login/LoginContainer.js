@@ -75,7 +75,7 @@ class LoginContainer extends PureComponent {
       })
       .then(this.authenticate)
       // eslint-disable-next-line no-console
-      .catch((e) => console.log(e))
+      .catch((e) => console.log(e.code))
   }
 
   authenticate = () => {
@@ -98,8 +98,6 @@ class LoginContainer extends PureComponent {
           if (error.code !== 'AUTHENTICATION_CANCELED') {
             Alert.alert(authenticateErrors[error.code])
           }
-        } else {
-          Alert.alert('Authenticate error.')
         }
       })
   }

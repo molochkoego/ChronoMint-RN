@@ -178,7 +178,6 @@ class SendEthContainer extends React.Component {
   }
 
   handleGoToPasswordModal = () => {
-
     if (this.state.isRecipientInputValid && this.state.isAmountInputValid) {
 
       this.handleTogglePasswordModal()
@@ -228,18 +227,20 @@ class SendEthContainer extends React.Component {
         masterWalletAddress,
         selectedCurrency,
       } = this.props
-      if (!(value.endsWith(',') || value.endsWith('.'))) {
+
+      const tokenPrice =
+        (prices &&
+          this.state.selectedToken &&
+          prices[this.state.selectedToken.symbol] &&
+          prices[this.state.selectedToken.symbol][selectedCurrency]) ||
+        0 // TODO: handle wrong values correctly
+        
+      if (value && !(value.endsWith(',') || value.endsWith('.'))) {
         const inputValue = value.replace(',', '.').replace(' ', '')
         const localeValue = new BigNumber(inputValue).toNumber()
-        const tokenPrice =
-          (prices &&
-            this.state.selectedToken &&
-            prices[this.state.selectedToken.symbol] &&
-            prices[this.state.selectedToken.symbol][selectedCurrency]) ||
-          0 // TODO: handle wrong values correctly
         const dummyValidationOfAmountInput =
           localeValue !== null && localeValue !== undefined && localeValue !== '' && localeValue > 0
-        // && localeValue <= +this.state.selectedToken.balance
+        && localeValue <= +this.state.selectedToken.balance
         this.setState(
           {
             amount: inputValue,
@@ -257,14 +258,20 @@ class SendEthContainer extends React.Component {
           }
         )
       } else {
+        const newAmount = this.state.amount.endsWith('.') || this.state.amount.endsWith(',') || this.state.amount.endsWith(' ')
+          ? this.state.amount
+          : value.replace(',', '.').replace(' ', '')
         this.setState({
-          amount: value ? value.replace(',', '.').replace(' ', '') : null,
+          amount: newAmount || '0',
           amountInCurrency: 0,
-          isAmountInputValid: value.toNumber() ? true : false,
+          isAmountInputValid: false,
         }, () => {
+          const newAmount = value
+            ? new BigNumber(value.replace(',', '').replace('.', '').replace(' ', '')).toNumber()
+            : 0
           updateEthereumTxDraftValue({
             masterWalletAddress,
-            value: new BigNumber(this.state.amount).toNumber(),
+            value: newAmount,
           })
         })
       }

@@ -99,9 +99,9 @@ class PasswordEnterModalContainer extends React.Component {
       .catch((error) => {
         // eslint-disable-next-line no-console
         if (authenticateErrors[error.code]) {
-          Alert.alert(authenticateErrors[error.code])
-        } else {
-          Alert.alert('Authenticate error.')
+          if (error.code !== 'AUTHENTICATION_CANCELED') {
+            Alert.alert(authenticateErrors[error.code])
+          }
         }
       })
   }

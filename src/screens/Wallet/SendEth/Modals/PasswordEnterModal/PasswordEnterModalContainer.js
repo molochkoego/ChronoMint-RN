@@ -106,8 +106,6 @@ class PasswordEnterModalContainer extends React.Component {
           if (error.code !== 'AUTHENTICATION_CANCELED') {
             Alert.alert(authenticateErrors[error.code])
           }
-        } else {
-          Alert.alert('Authenticate error.')
         }
       })
   }
