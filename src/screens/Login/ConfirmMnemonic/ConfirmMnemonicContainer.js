@@ -35,16 +35,39 @@ class ConfirmMnemonicContainer extends PureComponent {
   }
 
   handleUndo = () => {
-    const { words, mnemonic, prevWords, prevMnemonic } = this.state
-    if (words != prevWords && mnemonic !== prevMnemonic) {
+    const { words, mnemonic } = this.state
+    const [lastStep] = this.state.prevSteps.slice(-1)
+    if (lastStep && words != lastStep.words && mnemonic !== lastStep.mnemonic && this.state.prevSteps.length) {
+      const newprevSteps = [...this.state.prevSteps]
+      newprevSteps.pop()
       this.setState({
-        words: this.state.prevWords,
-        mnemonic: this.state.prevMnemonic,
-        disabled: true,
+        words: lastStep.words,
+        mnemonic: lastStep.mnemonic,
+        randomWords: lastStep.randomWords,
+        prevSteps: newprevSteps,
+      }, () => {
+        if (this.state.mnemonic.length === 0) {
+          this.setState({ disabled: true })
+        }
       })
     }
   }
 
+  handleRandomMnemonicElements = (words) => {
+    const randWordsArray = []
+    while (randWordsArray.length < 3) {
+      const randElem = words[Math.floor(Math.random() * words.length)]
+      if (randWordsArray.indexOf(randElem) === -1) {
+        randWordsArray.push({
+          word: randElem,
+          index: words.indexOf(randElem),
+        })
+      }
+    }
+    if (randWordsArray.length === 3) {
+      return randWordsArray
+    }
+  }
 
   handleDone = () => {
     const {
@@ -55,10 +78,11 @@ class ConfirmMnemonicContainer extends PureComponent {
       createAccountByMnemonic,
     } = this.props
 
-    if (mnemonic !== this.state.mnemonic.join(' ')) {
-      Alert.alert(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
-      return this.resetState()
-    }
+    // if (mnemonic !== this.state.mnemonic.join(' ')) {
+    //   Alert.alert(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
+    //   return this.resetState()
+    // }
+
     createAccountByMnemonic(mnemonic, password)
       .then(() => {
         this.navigateToStartPage()
@@ -66,6 +90,10 @@ class ConfirmMnemonicContainer extends PureComponent {
       .catch((error) => {
         Alert.alert(error)
       })
+  }
+
+  handleSkip = () => {
+    this.handleDone() // if we would have some validation in handleDone so we could send skip parameter from here
   }
 
   navigateToStartPage () {
@@ -81,31 +109,45 @@ class ConfirmMnemonicContainer extends PureComponent {
 
   handleWord = (word) => {
     if (word) {
-      const { mnemonic, words, disabled } = this.state
-      if (disabled) {
-        this.setState({ disabled: false })
-      }
-      const newWords = [...words]
-      newWords[newWords.indexOf(word)] = ''
-      this.setState({
-        prevMnemonic: mnemonic,
-        prevWords: words,
-        mnemonic: [...mnemonic, word],
-        words: [...newWords],
-      }, () => {
-        if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
-          this.handleDone()
+      const { mnemonic, words, disabled, prevSteps } = this.state
+      const randomWords = [...this.state.randomWords]
+      const [lastRandomWord] = randomWords.slice(-1)
+      if (lastRandomWord.word === word) {
+        if (disabled) {
+          this.setState({ disabled: false })
         }
-      })
+        const newWords = [...words]
+        newWords[newWords.indexOf(word)] = ''
+        randomWords.pop()
+        this.setState({
+          prevSteps: [...prevSteps, { mnemonic, words, randomWords: this.state.randomWords }],
+          mnemonic: [...mnemonic, word],
+          words: [...newWords],
+          randomWords,
+        }, () => {
+          if (this.state.randomWords.length === 0) {
+            this.handleDone()
+          }
+          // if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
+          //   this.handleDone()
+          // }
+        })
+      } else {
+        Alert.alert('Wrong word')
+      }
     }
   }
 
   createInitialState = () => {
     const { mnemonic } = this.props.navigation.state.params
+    const words = mnemonic.split(' ').sort(() => Math.random() - 0.5)
+    const randomWords = this.handleRandomMnemonicElements(words)
     return {
+      prevSteps: [],
       disabled: true,
       mnemonic: [],
-      words: mnemonic.split(' ').sort(() => Math.random() - 0.5),
+      randomWords,
+      words,
     }
   }
 
@@ -114,15 +156,18 @@ class ConfirmMnemonicContainer extends PureComponent {
   }
 
   render () {
-    const { words, mnemonic, disabled } = this.state
+    const { words, mnemonic, disabled, randomWords } = this.state
+    const [lastRandomWord] = randomWords.slice(-1)
     return (
       <ConfirmMnemonic
         onDone={this.handleDone}
         onClear={this.handleClear}
         onUndo={this.handleUndo}
         onWord={this.handleWord}
+        onSkip={this.handleSkip}
         mnemonic={mnemonic}
         words={words}
+        lastRandomWordIndex={lastRandomWord && lastRandomWord.index + 1}
         disabled={disabled}
       />
     )

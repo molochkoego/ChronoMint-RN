@@ -154,7 +154,8 @@
     "title": "Confirm recovery phrase",
     "done": "Done",
     "undo": "Undo",
-    "clear": "Clear",
+    "skip": "Skip",
+    "reset": "Reset",
     "wrongMnemonicError": "Wrong mnemonic. Try again"
   },
   "GenerateMnemonic": {
