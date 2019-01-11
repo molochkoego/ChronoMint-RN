@@ -220,6 +220,7 @@
     "WalletList": "Wallets List",
     "Wallet": "Wallet",
     "Send": "Send Funds",
+    "Receive": "Receive Funds",
     "QRscanner": "Scan QR code",
     "TokenSelector": "Select Token"
   }
