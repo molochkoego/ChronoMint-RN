@@ -11,7 +11,6 @@ import PropTypes from 'prop-types'
 import { createAccountByMnemonic } from '@chronobank/ethereum/redux/thunks'
 import { getEthAccountList } from '@chronobank/ethereum/redux/selectors'
 import i18n from '../../../locales/translation'
-import { MNEMONIC_LENGTH } from '../../../common/constants/globals'
 import ConfirmMnemonic from './ConfirmMnemonic'
 
 const mapStateToProps = (state) => {
@@ -57,7 +56,8 @@ class ConfirmMnemonicContainer extends PureComponent {
     const randWordsArray = []
     while (randWordsArray.length < 3) {
       const randElem = words[Math.floor(Math.random() * words.length)]
-      if (randWordsArray.indexOf(randElem) === -1) {
+      const elemPos = randWordsArray.findIndex((item) => item.word === randElem)
+      if ( elemPos === -1) {
         randWordsArray.push({
           word: randElem,
           index: words.indexOf(randElem),
@@ -67,6 +67,11 @@ class ConfirmMnemonicContainer extends PureComponent {
     if (randWordsArray.length === 3) {
       return randWordsArray
     }
+  }
+
+  handleShowError = () => {
+    Alert.alert(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
+    return this.resetState()
   }
 
   handleDone = (skip) => {
@@ -79,8 +84,7 @@ class ConfirmMnemonicContainer extends PureComponent {
     } = this.props
     const { randomWords } = this.state
     if (skip !== true && randomWords.length !== 0) {
-      Alert.alert(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
-      return this.resetState()
+      return this.handleShowError()
     }
 
 
@@ -117,30 +121,26 @@ class ConfirmMnemonicContainer extends PureComponent {
     if (word) {
       const { mnemonic, words, disabled, prevSteps } = this.state
       const randomWords = [...this.state.randomWords]
-      const [lastRandomWord] = randomWords.slice(-1)
-      if (lastRandomWord.word === word) {
-        if (disabled) {
-          this.setState({ disabled: false })
-        }
-        const newWords = [...words]
-        newWords[newWords.indexOf(word)] = ''
-        randomWords.pop()
-        this.setState({
-          prevSteps: [...prevSteps, { mnemonic, words, randomWords: this.state.randomWords }],
-          mnemonic: [...mnemonic, word],
-          words: [...newWords],
-          randomWords,
-        }, () => {
-          if (this.state.randomWords.length === 0) {
-            this.handleDone()
-          }
-          // if (this.state.mnemonic.length === MNEMONIC_LENGTH) {
-          //   this.handleDone()
-          // }
-        })
-      } else {
-        Alert.alert('Wrong word')
+      if (disabled) {
+        this.setState({ disabled: false })
       }
+      const newWords = [...words]
+      newWords[newWords.indexOf(word)] = ''
+      randomWords.pop()
+      this.setState({
+        prevSteps: [...prevSteps, { mnemonic, words, randomWords: this.state.randomWords }],
+        mnemonic: [...mnemonic, word],
+        words: [...newWords],
+        randomWords,
+      }, () => {
+        if(this.state.randomWords.length === 0 ){
+          if (this.state.mnemonic.join(',') === this.state.defaultWords.join(',') ) {
+            this.handleDone()
+          }else {
+            this.handleShowError()
+          }
+        }
+      })
     }
   }
 
@@ -153,6 +153,7 @@ class ConfirmMnemonicContainer extends PureComponent {
       disabled: true,
       mnemonic: [],
       randomWords,
+      defaultWords: randomWords,
       words,
     }
   }
@@ -162,8 +163,8 @@ class ConfirmMnemonicContainer extends PureComponent {
   }
 
   render () {
-    const { words, mnemonic, disabled, randomWords } = this.state
-    const [lastRandomWord] = randomWords.slice(-1)
+    const { words, mnemonic, disabled, randomWords, defaultWords } = this.state
+    const lastRandomWord = defaultWords[randomWords.length-1]
     return (
       <ConfirmMnemonic
         onDone={this.handleDone}
