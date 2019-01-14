@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { NavigationEvents } from 'react-navigation'
 import i18n from '../../../locales/translation'
 import ActionButton from '../../../components/ActionButton'
 import {
@@ -43,9 +44,13 @@ export default class Wallet extends PureComponent {
       selectedCurrency,
       transactions,
       latestTransactionDate,
+      onDropSelectedTransaction = () => {},
     } = this.props
     return (
       <View style={styles.screenView}>
+        <NavigationEvents
+          onDidFocus ={onDropSelectedTransaction}
+        />
         <ScrollView style={styles.mainSection}>
           <WalletInfoContainer
             address={address}

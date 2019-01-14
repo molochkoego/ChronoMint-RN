@@ -222,6 +222,7 @@
     "Send": "Send Funds",
     "Receive": "Receive Funds",
     "QRscanner": "Scan QR code",
+    "TransactionDetails": "Send Funds",
     "TokenSelector": "Select Token"
   }
 }

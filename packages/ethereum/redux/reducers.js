@@ -291,34 +291,59 @@ const selectEthereumWallet = (state, { address }) => ({
 
 const ethereumTxUpdateHistory = (state, { latestTxDate, txList, masterWalletAddress, withReset }) => {
   let list = Object.assign({}, state.list)
-  list = withReset
-    ? {
-      ...list,
-      [masterWalletAddress]: {
-        ...list[masterWalletAddress],
-        transactions: {
-          ...list[masterWalletAddress].transactions,
-          latestTxDate,
-          txList: [
-            ...txList,
-          ],
-        },
+  const newTxList = withReset
+    ? [
+      ...txList,
+    ]
+    : [
+      ...list[masterWalletAddress].transactions.txList,
+      ...txList,
+    ]
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      transactions: {
+        ...list[masterWalletAddress].transactions,
+        latestTxDate,
+        txList: [
+          ...newTxList,
+        ],
       },
-    }
-    : {
-      ...list,
-      [masterWalletAddress]: {
-        ...list[masterWalletAddress],
-        transactions: {
-          ...list[masterWalletAddress].transactions,
-          latestTxDate,
-          txList: [
-            ...list[masterWalletAddress].transactions.txList,
-            ...txList,
-          ],
-        },
-      },
-    }
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
+const ethereumSelectTransaction = (state, { selectedTransaction, masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+      selectedTransaction,
+    },
+  }
+
+  return {
+    ...state,
+    list,
+  }
+}
+
+const ethereumDropSelectedTransaction = (state, { masterWalletAddress }) => {
+  let list = Object.assign({}, state.list)
+  delete list[masterWalletAddress].selectedTransaction
+  list = {
+    ...list,
+    [masterWalletAddress]: {
+      ...list[masterWalletAddress],
+    },
+  }
 
   return {
     ...state,
@@ -352,6 +377,8 @@ const mutations = {
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_DATA]: ethereumTxUpdateData,
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_SIGNED_TX]: ethereumTxUpdateSignedTx,
   [ActionsTypes.ETHEREUM_TX_UPDATE_HISTORY]: ethereumTxUpdateHistory,
+  [ActionsTypes.ETHEREUM_SELECT_TRANSACTION]: ethereumSelectTransaction,
+  [ActionsTypes.ETHEREUM_DROP_SELECTED_TRANSACTION]: ethereumDropSelectedTransaction,
 }
 
 export default (state = initialState, { type, ...other }) => {

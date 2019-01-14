@@ -162,6 +162,28 @@ export const createBitcoinTxDraft = ({ address, masterWalletAddress }) => (dispa
   })
 }
 
+export const bitcoinSelectTransaction = ({ address, masterWalletAddress, selectedTransaction }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(Actions.bitcoinSelectTransaction({ address, masterWalletAddress, selectedTransaction }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const bitcoinDropSelectedTransaction = ({ address, masterWalletAddress }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(Actions.bitcoinDropSelectedTransaction({ address, masterWalletAddress }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
 export const dropBitcoinSelectedWallet = () => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {

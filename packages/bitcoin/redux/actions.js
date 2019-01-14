@@ -76,6 +76,19 @@ export const bitcoinCreateTxDraft = ({ address, masterWalletAddress }) => ({
   masterWalletAddress,
 })
 
+export const bitcoinSelectTransaction = ({ address, masterWalletAddress, selectedTransaction }) => ({
+  type: ActionsTypes.BITCOIN_SELECT_TRANSACTION,
+  address,
+  masterWalletAddress,
+  selectedTransaction,
+})
+
+export const bitcoinDropSelectedTransaction = ({ address, masterWalletAddress }) => ({
+  type: ActionsTypes.BITCOIN_DROP_SELECTED_TRANSACTION,
+  address,
+  masterWalletAddress,
+})
+
 export const bitcoinDeleteTxDraft = ({ address, masterWalletAddress }) => ({
   type: ActionsTypes.BITCOIN_DELETE_TX_DRAFT,
   address,

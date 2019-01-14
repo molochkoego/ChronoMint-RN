@@ -236,3 +236,25 @@ export const updateEthereumTxHistory = ({ latestTxDate, txList, masterWalletAddr
     }
   })
 }
+
+export const ethereumSelectTransaction = ({ masterWalletAddress, selectedTransaction }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(Actions.ethereumSelectTransaction({ masterWalletAddress, selectedTransaction }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}
+
+export const ethereumDropSelectedTransaction = ({ masterWalletAddress }) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(Actions.ethereumDropSelectedTransaction({ masterWalletAddress }))
+      return resolve()
+    } catch (e) {
+      return reject(e)
+    }
+  })
+}

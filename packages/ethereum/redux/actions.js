@@ -95,6 +95,17 @@ export const updateEthereumTxDraftSignedTx = ({ signedTx, masterWalletAddress })
   masterWalletAddress,
 })
 
+export const ethereumSelectTransaction = ({ selectedTransaction, masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_SELECT_TRANSACTION,
+  masterWalletAddress,
+  selectedTransaction,
+})
+
+export const ethereumDropSelectedTransaction = ({ masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_DROP_SELECTED_TRANSACTION,
+  masterWalletAddress,
+})
+
 export const ethereumTxUpdateHistory = ({ address, masterWalletAddress, latestTxDate, txList, withReset }) => ({
   type: ActionTypes.ETHEREUM_TX_UPDATE_HISTORY,
   latestTxDate,
