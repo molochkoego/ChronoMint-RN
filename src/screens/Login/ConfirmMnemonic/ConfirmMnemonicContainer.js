@@ -69,7 +69,7 @@ class ConfirmMnemonicContainer extends PureComponent {
     }
   }
 
-  handleDone = () => {
+  handleDone = (skip) => {
     const {
       mnemonic,
       password,
@@ -77,6 +77,12 @@ class ConfirmMnemonicContainer extends PureComponent {
     const {
       createAccountByMnemonic,
     } = this.props
+    const { randomWords } = this.state
+    if (skip !== true && randomWords.length !== 0) {
+      Alert.alert(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
+      return this.resetState()
+    }
+
 
     // if (mnemonic !== this.state.mnemonic.join(' ')) {
     //   Alert.alert(i18n.t('ConfirmMnemonic.wrongMnemonicError'))
@@ -93,7 +99,7 @@ class ConfirmMnemonicContainer extends PureComponent {
   }
 
   handleSkip = () => {
-    this.handleDone() // if we would have some validation in handleDone so we could send skip parameter from here
+    this.handleDone(true) // if we would have some validation in handleDone so we could send skip parameter from here
   }
 
   navigateToStartPage () {

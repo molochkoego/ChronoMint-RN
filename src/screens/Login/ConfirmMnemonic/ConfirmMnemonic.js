@@ -73,7 +73,7 @@ export default class ConfirmMnemonic extends PureComponent {
         </View>
         <View style={styles.infoLine}>
           <Text style={styles.word}>
-            Select the work on {lastRandomWordIndex} position
+            Select the word on {lastRandomWordIndex} position
           </Text>
         </View>
         <View style={{ flexShrink: 1 }}>

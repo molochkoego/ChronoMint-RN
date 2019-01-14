@@ -8,7 +8,7 @@ import { Clipboard } from 'react-native'
 import PropTypes from 'prop-types'
 import Receive from './Receive'
 
-class ReceiveContainer extends PureComponent {
+export default class ReceiveContainer extends PureComponent {
 
   static propTypes = {
     navigation: PropTypes.shape({
@@ -41,4 +41,3 @@ class ReceiveContainer extends PureComponent {
   }
 }
 
-export default ReceiveContainer
