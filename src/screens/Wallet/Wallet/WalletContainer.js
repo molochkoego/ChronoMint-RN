@@ -6,7 +6,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Alert } from 'react-native'
 import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
