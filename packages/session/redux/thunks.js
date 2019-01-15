@@ -88,7 +88,7 @@ export const loginThunk = (ethAddress, privateKey) => (dispatch, getState) => {
               // eslint-disable-next-line no-console
               console.log('Update BTC balance HTTP ERROR:', error)
             })
-          
+
           // Connect to RabbitMQ and subscribe for updates
           dispatch(rmqConnect())
             .then(() => {
@@ -99,6 +99,7 @@ export const loginThunk = (ethAddress, privateKey) => (dispatch, getState) => {
                   // Do nothing, subscribed.
                 })
                 .catch((error) => {
+                  // eslint-disable-next-line no-console
                   console.log('HTTP response ERROR:', error)
                 })
 
