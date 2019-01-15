@@ -48,6 +48,13 @@ const ethereumCreateWallet = (state, { address, encrypted, path }) => {
   }
 }
 
+const ethereumAddLatestBlock = (state, { latestBlock }) => {
+  return {
+    ...state,
+    latestBlock,
+  }
+}
+
 const ethereumCreateDerivedWallet = (state, { masterWalletAddress, address }) => {
   let list = Object.assign({}, state.list)
   list = {
@@ -361,6 +368,7 @@ const dropEthereumSelectedWallet = (state) => {
 const mutations = {
 
   [REHYDRATE]: ethereumRehydrate,
+  [ActionsTypes.ETHEREUM_ADD_LATEST_BLOCK]: ethereumAddLatestBlock,
   [ActionsTypes.ETHEREUM_CREATE_DERIVED_WALLET]: ethereumCreateDerivedWallet,
   [ActionsTypes.ETHEREUM_CREATE_WALLET]: ethereumCreateWallet,
   [ActionsTypes.ETHEREUM_SELECT_WALLET]: selectEthereumWallet,

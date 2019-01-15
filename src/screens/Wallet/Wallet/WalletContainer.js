@@ -7,7 +7,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { bitcoinDropSelectedTransaction } from '@chronobank/bitcoin/redux/thunks'
+import { bitcoinDeselectTransaction } from '@chronobank/bitcoin/redux/thunks'
 import { ethereumDeselectTransaction } from '@chronobank/ethereum/redux/thunks'
 import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  bitcoinDropSelectedTransaction,
+  bitcoinDeselectTransaction,
   ethereumDeselectTransaction,
 }, dispatch)
 
@@ -38,7 +38,7 @@ class WalletContainer extends Component {
   }
 
   static propTypes = {
-    bitcoinDropSelectedTransaction: PropTypes.func,
+    bitcoinDeselectTransaction: PropTypes.func,
     ethereumDeselectTransaction: PropTypes.func,
     masterWalletAddress: PropTypes.string,
     currentBTCWallet: PropTypes.shape({}),
@@ -56,7 +56,7 @@ class WalletContainer extends Component {
   handleDropSelectedTransaction = () => {
     const {
       navigation,
-      bitcoinDropSelectedTransaction,
+      bitcoinDeselectTransaction,
       ethereumDeselectTransaction,
       masterWalletAddress,
       currentBTCWallet,
@@ -69,7 +69,7 @@ class WalletContainer extends Component {
     if (currentWallet.selectedTransaction) {
       const removeSelectedTransaction = blockchain === BLOCKCHAIN_ETHEREUM
         ? ethereumDeselectTransaction
-        : bitcoinDropSelectedTransaction
+        : bitcoinDeselectTransaction
       const params = { masterWalletAddress }
       blockchain !== BLOCKCHAIN_ETHEREUM ? params.address = currentWallet.address : null
       removeSelectedTransaction(params)

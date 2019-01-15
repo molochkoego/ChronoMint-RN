@@ -115,6 +115,17 @@ export const selectEthereumWallet = ({ address }) => (dispatch, getState) => {
   })
 }
 
+export const ethereumAddLatestBlock = (latestBlock) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    try {
+      dispatch(Actions.ethereumAddLatestBlock(latestBlock))
+      return resolve()
+    } catch (error) {
+      return reject(error)
+    }
+  })
+}
+
 export const dropEthereumSelectedWallet = () => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {

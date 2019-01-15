@@ -15,6 +15,11 @@ export const getEthereumWalletList = createSelector(
   (duckEthereum) => duckEthereum && duckEthereum.list
 )
 
+export const getEthereumLatestBlock = createSelector(
+  getDuckEthereum,
+  (duckEthereum) => duckEthereum && duckEthereum.latestBlock
+)
+
 export const getCurrentEthWallet = (ethAddress) => createSelector(
   getEthereumWalletList,
   (ethereumList) => {

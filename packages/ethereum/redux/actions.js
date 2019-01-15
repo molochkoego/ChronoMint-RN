@@ -5,6 +5,11 @@
 
 import * as ActionTypes from './constants'
 
+export const ethereumAddLatestBlock = (latestBlock) => ({
+  type: ActionTypes.ETHEREUM_ADD_LATEST_BLOCK,
+  latestBlock,
+})
+
 export const ethereumCreateWallet = (address, encrypted, path) => ({
   type: ActionTypes.ETHEREUM_CREATE_WALLET,
   address,

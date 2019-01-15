@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getBlockNumber } from '@chronobank/ethereum/middleware/thunks'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
-import { ethereumSelectTransaction } from '@chronobank/ethereum/redux/thunks'
+import { ethereumSelectTransaction, ethereumAddLatestBlock } from '@chronobank/ethereum/redux/thunks'
 import { bitcoinSelectTransaction } from '@chronobank/bitcoin/redux/thunks'
 import { requestEthereumTransactionByHash } from '@chronobank/ethereum/service/api'
 import { requestBitcoinTransactionByHash } from '@chronobank/bitcoin/service/api'
@@ -34,6 +34,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   ethereumSelectTransaction,
   bitcoinSelectTransaction,
   getBlockNumber,
+  ethereumAddLatestBlock,
 }, dispatch)
 
 class TransactionItemContainer extends PureComponent {
@@ -44,6 +45,7 @@ class TransactionItemContainer extends PureComponent {
     }),
     masterWalletAddress: PropTypes.string,
     currentBTCWallet: PropTypes.shape({}),
+    ethereumAddLatestBlock: PropTypes.func,
     getBlockNumber: PropTypes.func,
     ethereumSelectTransaction: PropTypes.func,
     bitcoinSelectTransaction: PropTypes.func,
@@ -63,7 +65,6 @@ class TransactionItemContainer extends PureComponent {
   }
 
 
-
   handleTransactionClick = async ({ blockchain, hash, type }) => {
     const {
       requestEthereumTransactionByHash,
@@ -73,6 +74,7 @@ class TransactionItemContainer extends PureComponent {
       masterWalletAddress,
       currentBTCWallet,
       getBlockNumber,
+      ethereumAddLatestBlock,
       navigation,
     } = this.props
 
@@ -89,11 +91,13 @@ class TransactionItemContainer extends PureComponent {
       ? ethereumSelectTransaction
       : bitcoinSelectTransaction
     const latestBlock = blockchain === BLOCKCHAIN_ETHEREUM ? await getBlockNumber() : null
+    await ethereumAddLatestBlock(latestBlock)
 
     transactionDetailsRequest(hash)
       .then((result) => {
-        const thunkParams = { masterWalletAddress, selectedTransaction: {...result.payload.data, latestBlock} }
-        blockchain === !BLOCKCHAIN_ETHEREUM
+        const selectedTransaction = result.payload.data
+        const thunkParams = { masterWalletAddress, selectedTransaction }
+        blockchain !== BLOCKCHAIN_ETHEREUM
           ? thunkParams.address = currentBTCWallet.address
           : null
         transactionDetailsThunk(thunkParams)

@@ -8,4 +8,5 @@ export default {
   list: {},
   lastRequestMeta: null,
   pending: {},
+  latestBlock: null,
 }

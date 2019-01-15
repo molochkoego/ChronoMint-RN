@@ -10,7 +10,7 @@ import moment from 'moment'
 import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
 import { selectMarketPrices } from '@chronobank/market/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
-import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
+import { getCurrentEthWallet, getEthereumLatestBlock } from '@chronobank/ethereum/redux/selectors'
 import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
 import { BLOCKCHAIN_ETHEREUM, ETH_PRIMARY_TOKEN } from '@chronobank/ethereum/constants'
 import { BTC_PRIMARY_TOKEN } from '@chronobank/bitcoin/constants'
@@ -25,6 +25,7 @@ const mapStateToProps = (state) => {
     masterWalletAddress,
     prices: selectMarketPrices(state),
     selectedCurrency: selectCurrentCurrency(state),
+    latestBlock: getEthereumLatestBlock(state),
     currentBTCWallet: getBitcoinCurrentWallet(masterWalletAddress)(state),
     currentETHWallet: getCurrentEthWallet(masterWalletAddress)(state),
   }
@@ -33,6 +34,7 @@ const mapStateToProps = (state) => {
 class TransactionDetailsContainer extends PureComponent {
 
   static propTypes = {
+    latestBlock: PropTypes.number,
     masterWalletAddress: PropTypes.string,
     currentBTCWallet: PropTypes.shape({}),
     navigation: PropTypes.shape({}),
@@ -62,6 +64,7 @@ class TransactionDetailsContainer extends PureComponent {
       currentBTCWallet,
       currentETHWallet,
       prices,
+      latestBlock,
     } = this.props
     const { blockchain, type } = navigation.state.params
     const currentWallet = blockchain === BLOCKCHAIN_ETHEREUM
@@ -75,13 +78,13 @@ class TransactionDetailsContainer extends PureComponent {
     const date = this.handleFormatDate(selectedTransaction.timestamp)
     const transactionParams = blockchain === BLOCKCHAIN_ETHEREUM
       ? {
-        confirmations: selectedTransaction.latestBlock - selectedTransaction.blockNumber, 
+        confirmations: latestBlock - selectedTransaction.blockNumber,
         to: selectedTransaction.to,
         from: selectedTransaction.from,
         value: amountToBalance(selectedTransaction.value),
       }
       : {
-        confirmations: selectedTransaction.confirmations, 
+        confirmations: selectedTransaction.confirmations,
         to: selectedTransaction.inputs[0].address,
         from: selectedTransaction.outputs[0].address,
         value: convertSatoshiToBTC(selectedTransaction.outputs[0].value),
