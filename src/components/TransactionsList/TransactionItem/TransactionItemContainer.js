@@ -8,6 +8,7 @@ import BigNumber from 'bignumber.js'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { getBlockNumber } from '@chronobank/ethereum/middleware/thunks'
 import { BLOCKCHAIN_ETHEREUM } from '@chronobank/ethereum/constants'
 import { ethereumSelectTransaction } from '@chronobank/ethereum/redux/thunks'
 import { bitcoinSelectTransaction } from '@chronobank/bitcoin/redux/thunks'
@@ -33,6 +34,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   requestBitcoinTransactionByHash,
   ethereumSelectTransaction,
   bitcoinSelectTransaction,
+  getBlockNumber,
 }, dispatch)
 
 class TransactionItemContainer extends PureComponent {
@@ -43,6 +45,7 @@ class TransactionItemContainer extends PureComponent {
     }),
     masterWalletAddress: PropTypes.string,
     currentBTCWallet: PropTypes.shape({}),
+    getBlockNumber: PropTypes.func,
     ethereumSelectTransaction: PropTypes.func,
     bitcoinSelectTransaction: PropTypes.func,
     requestEthereumTransactionByHash: PropTypes.func,
@@ -85,7 +88,7 @@ class TransactionItemContainer extends PureComponent {
 
   }
 
-  handleTransactionClick = ({ blockchain, hash, type }) => {
+  handleTransactionClick = async ({ blockchain, hash, type }) => {
     const {
       requestEthereumTransactionByHash,
       requestBitcoinTransactionByHash,
@@ -93,6 +96,7 @@ class TransactionItemContainer extends PureComponent {
       bitcoinSelectTransaction,
       masterWalletAddress,
       currentBTCWallet,
+      getBlockNumber,
       navigation,
     } = this.props
 
@@ -108,14 +112,14 @@ class TransactionItemContainer extends PureComponent {
     const transactionDetailsThunk = blockchain === BLOCKCHAIN_ETHEREUM
       ? ethereumSelectTransaction
       : bitcoinSelectTransaction
-
+    const latestBlock = blockchain === BLOCKCHAIN_ETHEREUM ? await getBlockNumber() : null
 
     transactionDetailsRequest(hash)
       .then((result) => {
         const thunkParams = { masterWalletAddress, selectedTransaction: result.payload.data }
-        blockchain !== BLOCKCHAIN_ETHEREUM
-          ? thunkParams.address = currentBTCWallet.address
-          : null
+        blockchain === BLOCKCHAIN_ETHEREUM
+          ? thunkParams.selectedTransaction.confirmations = latestBlock - result.payload.data.blockNumber
+          : thunkParams.address = currentBTCWallet.address
         transactionDetailsThunk(thunkParams)
           .then(() => {
             navigation.navigate('TransactionDetails', params)

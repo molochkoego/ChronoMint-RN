@@ -14,7 +14,7 @@ export default StyleSheet.create({
     flex: 1,
     marginTop: headerHeight,
     backgroundColor: colors.light,
-    padding: 10,
+    padding: 20,
   },
   lightGreyText: {
     color: colors.greySub,

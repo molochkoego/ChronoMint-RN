@@ -67,6 +67,9 @@ export const getGasPrice = () => (dispatch) =>
 export const initContracts = (ethAddress) => (dispatch) =>
   dispatch(Actions.initContracts(ethAddress))
 
+export const getBlockNumber = () => (dispatch) =>
+  dispatch(Actions.getBlockNumber())
+
 export const sendToken = ({ from, to, tokenSymbol, value }) => (dispatch) =>
   dispatch(Actions.sendToken({ from, to, tokenSymbol, value }))
 

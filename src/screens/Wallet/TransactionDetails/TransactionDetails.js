@@ -27,6 +27,7 @@ export default class TransactionDetails extends PureComponent {
   }
 
   handleTransactionStatusRender = (confirmations) => {
+    const {type} = this.props
     if(confirmations <= 6){
       return(
         <LabeledItem
@@ -41,7 +42,7 @@ export default class TransactionDetails extends PureComponent {
     } else {
       return(
         <LabeledItem
-          labelText='Received'
+          labelText={type === 'sending' ? 'Sent' : 'Received'}
           labelAlign='left'
         />
       )
@@ -68,7 +69,7 @@ export default class TransactionDetails extends PureComponent {
       <View style={styles.screenView}>        
         <View style={styles.transactionStatus}>
           <TransactionIcon
-            confirmations={confirmations || 999} //for testing, need to discuss
+            confirmations={confirmations}
             mode='big'
             type={type}
           />

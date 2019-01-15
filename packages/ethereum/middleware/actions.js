@@ -100,6 +100,10 @@ export const initContracts = (ethAddress) => ({
   ethAddress,
 })
 
+export const getBlockNumber = () => ({
+  type: ActionTypes.WEB3_MIDDLEWARE_METHOD_GET_BLOCK_NUMBER,
+})
+
 export const sendToken = ({ from, to, tokenSymbol, value }) => ({
   type: ActionTypes.WEB3_MIDDLEWARE_SEND_TOKEN,
   from,
