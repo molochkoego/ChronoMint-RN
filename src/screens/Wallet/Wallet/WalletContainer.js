@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { bitcoinDropSelectedTransaction } from '@chronobank/bitcoin/redux/thunks'
-import { ethereumDropSelectedTransaction } from '@chronobank/ethereum/redux/thunks'
+import { ethereumDeselectTransaction } from '@chronobank/ethereum/redux/thunks'
 import { selectCurrentCurrency } from '@chronobank/market/redux/selectors'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { getCurrentEthWallet } from '@chronobank/ethereum/redux/selectors'
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   bitcoinDropSelectedTransaction,
-  ethereumDropSelectedTransaction,
+  ethereumDeselectTransaction,
 }, dispatch)
 
 class WalletContainer extends Component {
@@ -39,7 +39,7 @@ class WalletContainer extends Component {
 
   static propTypes = {
     bitcoinDropSelectedTransaction: PropTypes.func,
-    ethereumDropSelectedTransaction: PropTypes.func,
+    ethereumDeselectTransaction: PropTypes.func,
     masterWalletAddress: PropTypes.string,
     currentBTCWallet: PropTypes.shape({}),
     currentETHWallet: PropTypes.shape({}),
@@ -54,10 +54,10 @@ class WalletContainer extends Component {
   }
 
   handleDropSelectedTransaction = () => {
-    const { 
+    const {
       navigation,
       bitcoinDropSelectedTransaction,
-      ethereumDropSelectedTransaction,
+      ethereumDeselectTransaction,
       masterWalletAddress,
       currentBTCWallet,
       currentETHWallet,
@@ -66,17 +66,21 @@ class WalletContainer extends Component {
     const currentWallet = blockchain === BLOCKCHAIN_ETHEREUM
       ? currentETHWallet
       : currentBTCWallet
-    if(currentWallet.hasOwnProperty('selectedTransaction')){
+    if (currentWallet.selectedTransaction) {
       const removeSelectedTransaction = blockchain === BLOCKCHAIN_ETHEREUM
-        ? ethereumDropSelectedTransaction
+        ? ethereumDeselectTransaction
         : bitcoinDropSelectedTransaction
       const params = { masterWalletAddress }
       blockchain !== BLOCKCHAIN_ETHEREUM ? params.address = currentWallet.address : null
       removeSelectedTransaction(params)
-        // eslint-disable-next-line no-console
-        .then(() => console.log('Removed selectedTx: '))
-        // eslint-disable-next-line no-console
-        .catch((error) => console.log('Removed ERROR: ', error))
+        .then(() => {
+          // eslint-disable-next-line no-console
+          console.log('Removed selectedTx: ')
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log('Removed ERROR: ', error)
+        })
     }
   }
 

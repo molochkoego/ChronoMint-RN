@@ -27,7 +27,7 @@ export default class TransactionItem extends PureComponent {
     type: PropTypes.oneOf(['receiving', 'sending']),
     hash: PropTypes.string,
     confirmations: PropTypes.number,
-    tType: PropTypes.string,
+    transactionType: PropTypes.string,
     balance: PropTypes.string,
     onFormattedBalance: PropTypes.func,
     onTransactionClick: PropTypes.func,
@@ -39,7 +39,7 @@ export default class TransactionItem extends PureComponent {
       hash,
       type,
       confirmations,
-      tType,
+      transactionType,
       address,
       balance,
       symbol,
@@ -69,7 +69,7 @@ export default class TransactionItem extends PureComponent {
               numberOfLines={2}
             >
               {
-                tType
+                transactionType
               }
               {'\n'}
               {

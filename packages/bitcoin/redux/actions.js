@@ -83,8 +83,8 @@ export const bitcoinSelectTransaction = ({ address, masterWalletAddress, selecte
   selectedTransaction,
 })
 
-export const bitcoinDropSelectedTransaction = ({ address, masterWalletAddress }) => ({
-  type: ActionsTypes.BITCOIN_DROP_SELECTED_TRANSACTION,
+export const bitcoinDeselectTransaction = ({ address, masterWalletAddress }) => ({
+  type: ActionsTypes.BITCOIN_DESELECT_TRANSACTION,
   address,
   masterWalletAddress,
 })

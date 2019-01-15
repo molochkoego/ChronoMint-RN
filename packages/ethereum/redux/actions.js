@@ -101,8 +101,8 @@ export const ethereumSelectTransaction = ({ selectedTransaction, masterWalletAdd
   selectedTransaction,
 })
 
-export const ethereumDropSelectedTransaction = ({ masterWalletAddress }) => ({
-  type: ActionTypes.ETHEREUM_DROP_SELECTED_TRANSACTION,
+export const ethereumDeselectTransaction = ({ masterWalletAddress }) => ({
+  type: ActionTypes.ETHEREUM_DESELECT_TRANSACTION,
   masterWalletAddress,
 })
 

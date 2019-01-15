@@ -4,7 +4,6 @@
  */
 
 import React, { PureComponent } from 'react'
-import BigNumber from 'bignumber.js'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -16,7 +15,7 @@ import { requestEthereumTransactionByHash } from '@chronobank/ethereum/service/a
 import { requestBitcoinTransactionByHash } from '@chronobank/bitcoin/service/api'
 import { getCurrentWallet } from '@chronobank/session/redux/selectors'
 import { getBitcoinCurrentWallet } from '@chronobank/bitcoin/redux/selectors'
-import isNumber from '../../../common/utils/numeric'
+import handleFormattedBalance from '../../../common/utils/transactionAmount'
 import i18n from '../../../locales/translation'
 import TransactionItem from './TransactionItem'
 
@@ -63,30 +62,7 @@ class TransactionItemContainer extends PureComponent {
     type: PropTypes.oneOf(['receiving', 'sending']),
   }
 
-  handleFormattedBalance = (balance, symbol, type) => {
-    if (!balance) {
-      return ''
-    }
-    let numBalance
-    if (isNumber(balance)) {
-      numBalance = balance
-    } else {
-      if (balance instanceof BigNumber) {
-        numBalance = balance.toNumber()
-      } else {
-        numBalance = parseInt(balance)
-      }
-    }
-    const isbalanceTooSmall = numBalance > 0 && numBalance < 0.01
-    let format = isbalanceTooSmall ? '%u%n+' : '%u%n  '
-    format = [
-      (type === 'sending' ? '-' : '+'),
-      format,
-    ].join(' ')
 
-    return i18n.toCurrency(numBalance, { precision: 2, unit: ` ${symbol} `, format })
-
-  }
 
   handleTransactionClick = async ({ blockchain, hash, type }) => {
     const {
@@ -124,11 +100,15 @@ class TransactionItemContainer extends PureComponent {
           .then(() => {
             navigation.navigate('TransactionDetails', params)
           })
-          // eslint-disable-next-line no-console
-          .catch((error) => console.log('transactionDetailsThunk ERROR: ', error))
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.log('transactionDetailsThunk ERROR: ', error)
+          })
       })
-      // eslint-disable-next-line no-console
-      .catch((error) => console.log('DETAILS REQUEST ERROR: ', error))
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log('DETAILS REQUEST ERROR: ', error)
+      })
   }
 
   render () {
@@ -143,19 +123,19 @@ class TransactionItemContainer extends PureComponent {
 
     const address = type === 'sending' ? to : from
 
-    const tType = i18n.t(['TransactionsList', type])
+    const transactionType = i18n.t(['TransactionsList', type])
 
     return (
       <TransactionItem
         blockchain={blockchain}
         hash={hash}
         confirmations={confirmations}
-        tType={tType}
+        transactionType={transactionType}
         address={address}
         balance={balance}
         symbol={symbol}
         type={type}
-        onFormattedBalance={this.handleFormattedBalance}
+        onFormattedBalance={handleFormattedBalance}
         onTransactionClick={this.handleTransactionClick}
       />
     )

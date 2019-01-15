@@ -246,10 +246,17 @@ class PasswordEnterModalContainer extends React.Component {
 
 PasswordEnterModalContainer.propTypes = {
   visible: PropTypes.bool,
+  updateEthereumTxDraftData: PropTypes.func,
+  updateEthereumTxDraftGasLimit: PropTypes.func,
+  currentEthWallet: PropTypes.func,
+  sendToken: PropTypes.func,
+  token: PropTypes.shape({}),
   modalToggle: PropTypes.func,
   passwordChange: PropTypes.func,
   error: PropTypes.string,
+  masterWalletAddress: PropTypes.string,
   confirmPassword: PropTypes.func,
+  updateEthereumTxDraftSignedTx: PropTypes.func,
   styles: PropTypes.shape({}),
 }
 

@@ -226,21 +226,21 @@ export default class Web3Controller {
             if (!data || !data.event) {
               return
             }
-            const eventType = data.event.toLowerCase()
-            switch (eventType) {
-              case 'transfer': {
-                // eslint-disable-next-line no-console
-                console.log('Token %s transfer event \'%s\':', tokenSymbol, eventType, data)
-                // if (this.requiredTokens.length === 0 || this.requiredTokens.includes(tokenSymbol)) {
-                //   this.dispatch(NodesActions.tokenTransfer(tokenSymbol, data))
-                // }
-                break
-              }
-              case 'approval': {
-                // eslint-disable-next-line no-console
-                console.log('Token %s approval event \'%s\':', tokenSymbol, eventType, data)
-                break
-              }
+            const eventransactionType = data.event.toLowerCase()
+            switch (eventransactionType) {
+            case 'transfer': {
+              // eslint-disable-next-line no-console
+              console.log('Token %s transfer event \'%s\':', tokenSymbol, eventransactionType, data)
+              // if (this.requiredTokens.length === 0 || this.requiredTokens.includes(tokenSymbol)) {
+              //   this.dispatch(NodesActions.tokenTransfer(tokenSymbol, data))
+              // }
+              break
+            }
+            case 'approval': {
+              // eslint-disable-next-line no-console
+              console.log('Token %s approval event \'%s\':', tokenSymbol, eventransactionType, data)
+              break
+            }
             }
           })
           .on('error', (error) => {

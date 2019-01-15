@@ -335,13 +335,13 @@ const ethereumSelectTransaction = (state, { selectedTransaction, masterWalletAdd
   }
 }
 
-const ethereumDropSelectedTransaction = (state, { masterWalletAddress }) => {
+const ethereumDeselectTransaction = (state, { masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
-  delete list[masterWalletAddress].selectedTransaction
   list = {
     ...list,
     [masterWalletAddress]: {
       ...list[masterWalletAddress],
+      selectedTransaction: null,
     },
   }
 
@@ -378,7 +378,7 @@ const mutations = {
   [ActionsTypes.ETHEREUM_UPDATE_TX_DRAFT_SIGNED_TX]: ethereumTxUpdateSignedTx,
   [ActionsTypes.ETHEREUM_TX_UPDATE_HISTORY]: ethereumTxUpdateHistory,
   [ActionsTypes.ETHEREUM_SELECT_TRANSACTION]: ethereumSelectTransaction,
-  [ActionsTypes.ETHEREUM_DROP_SELECTED_TRANSACTION]: ethereumDropSelectedTransaction,
+  [ActionsTypes.ETHEREUM_DESELECT_TRANSACTION]: ethereumDeselectTransaction,
 }
 
 export default (state = initialState, { type, ...other }) => {

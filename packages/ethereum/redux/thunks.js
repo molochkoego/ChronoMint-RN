@@ -65,8 +65,8 @@ export const updateEthereumBalance = ({ tokenSymbol, address, balance, amount, d
     try {
       dispatch(Actions.ethereumUpdateBalance({ tokenSymbol, address, balance, amount, decimals }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -109,8 +109,8 @@ export const selectEthereumWallet = ({ address }) => (dispatch, getState) => {
         })
       dispatch(Actions.selectEthereumWallet({ address }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -120,8 +120,8 @@ export const dropEthereumSelectedWallet = () => (dispatch) => {
     try {
       dispatch(Actions.dropEthereumSelectedWallet())
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -131,8 +131,8 @@ export const createEthereumTxDraft = ({ address, masterWalletAddress }) => (disp
     try {
       dispatch(Actions.createEthereumTxDraft({ address, masterWalletAddress }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -142,8 +142,8 @@ export const deleteEthereumTxDraft = ({ masterWalletAddress }) => (dispatch) => 
     try {
       dispatch(Actions.deleteEthereumTxDraft({ masterWalletAddress }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -154,8 +154,8 @@ export const updateEthereumTxDraftChainIdNonce = ({ chainId, nonce, masterWallet
       dispatch(Actions.updateEthereumTxDraftNonce({ nonce, masterWalletAddress }))
       dispatch(Actions.updateEthereumTxDraftChainId({ chainId, masterWalletAddress }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -165,8 +165,8 @@ export const updateEthereumTxDraftGasPrice = ({ gasPrice, masterWalletAddress })
     try {
       dispatch(Actions.updateEthereumTxDraftGasPrice({ gasPrice, masterWalletAddress }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -176,8 +176,8 @@ export const updateEthereumTxDraftGasLimit = ({ gasLimit, masterWalletAddress })
     try {
       dispatch(Actions.updateEthereumTxDraftGasLimit({ gasLimit, masterWalletAddress }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -187,8 +187,8 @@ export const updateEthereumTxDraftTo = ({ to, masterWalletAddress }) => (dispatc
     try {
       dispatch(Actions.updateEthereumTxDraftTo({ to, masterWalletAddress }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -198,8 +198,8 @@ export const updateEthereumTxDraftValue = ({ value, masterWalletAddress }) => (d
     try {
       dispatch(Actions.updateEthereumTxDraftValue({ value, masterWalletAddress }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -209,8 +209,8 @@ export const updateEthereumTxDraftData = ({ data, masterWalletAddress }) => (dis
     try {
       dispatch(Actions.updateEthereumTxDraftData({ data, masterWalletAddress }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -220,8 +220,8 @@ export const updateEthereumTxDraftSignedTx = ({ signedTx, masterWalletAddress })
     try {
       dispatch(Actions.updateEthereumTxDraftSignedTx({ signedTx, masterWalletAddress }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -231,8 +231,8 @@ export const updateEthereumTxHistory = ({ latestTxDate, txList, masterWalletAddr
     try {
       dispatch(Actions.ethereumTxUpdateHistory({ latestTxDate, txList, masterWalletAddress, address, withReset }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
@@ -242,19 +242,19 @@ export const ethereumSelectTransaction = ({ masterWalletAddress, selectedTransac
     try {
       dispatch(Actions.ethereumSelectTransaction({ masterWalletAddress, selectedTransaction }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }
 
-export const ethereumDropSelectedTransaction = ({ masterWalletAddress }) => (dispatch) => {
+export const ethereumDeselectTransaction = ({ masterWalletAddress }) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
-      dispatch(Actions.ethereumDropSelectedTransaction({ masterWalletAddress }))
+      dispatch(Actions.ethereumDeselectTransaction({ masterWalletAddress }))
       return resolve()
-    } catch (e) {
-      return reject(e)
+    } catch (error) {
+      return reject(error)
     }
   })
 }

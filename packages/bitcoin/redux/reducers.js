@@ -340,15 +340,15 @@ const bitcoinSelectTransaction = (state, { selectedTransaction, address, masterW
   }
 }
 
-const bitcoinDropSelectedTransaction = (state, { address, masterWalletAddress }) => {
+const bitcoinDeselectTransaction = (state, { address, masterWalletAddress }) => {
   let list = Object.assign({}, state.list)
-  delete list[masterWalletAddress][address].selectedTransaction
   list = {
     ...list,
     [masterWalletAddress]: {
       ...list[masterWalletAddress],
       [address]: {
         ...list[masterWalletAddress][address],
+        selectedTransaction: null,
       },
     },
   }
@@ -440,7 +440,7 @@ const mutations = {
   [ActionsTypes.BITCOIN_CREATE_WALLET]: bitcoinCreateWallet,
   [ActionsTypes.BITCOIN_TX_UPDATE_HISTORY]: bitcoinTxUpdateHistory,
   [ActionsTypes.BITCOIN_SELECT_TRANSACTION]: bitcoinSelectTransaction,
-  [ActionsTypes.BITCOIN_DROP_SELECTED_TRANSACTION]: bitcoinDropSelectedTransaction,
+  [ActionsTypes.BITCOIN_DESELECT_TRANSACTION]: bitcoinDeselectTransaction,
   // GET UTXOS
   [ActionsTypes.BITCOIN_HTTP_GET_UTXOS]: (state) => state,
   [ActionsTypes.BITCOIN_HTTP_GET_UTXOS_SUCCESS]: (state, data) => ({

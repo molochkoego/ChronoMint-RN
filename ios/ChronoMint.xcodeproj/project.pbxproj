@@ -781,7 +781,7 @@
 			name = ChronoMintTests;
 			productName = ChronoMintTests;
 			productReference = 00E356EE1AD99517003FC87E /* ChronoMintTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			productransactionType = "com.apple.product-type.bundle.unit-test";
 		};
 		13B07F861A680F5B00A75B9A /* ChronoMint */ = {
 			isa = PBXNativeTarget;
@@ -799,7 +799,7 @@
 			name = ChronoMint;
 			productName = "Hello World";
 			productReference = 13B07F961A680F5B00A75B9A /* ChronoMint.app */;
-			productType = "com.apple.product-type.application";
+			productransactionType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
