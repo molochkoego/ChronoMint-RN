@@ -75,13 +75,13 @@ class TransactionDetailsContainer extends PureComponent {
     const date = this.handleFormatDate(selectedTransaction.timestamp)
     const transactionParams = blockchain === BLOCKCHAIN_ETHEREUM
       ? {
-        confirmations: selectedTransaction.confirmations, //for testing purposes
+        confirmations: selectedTransaction.latestBlock - selectedTransaction.blockNumber, 
         to: selectedTransaction.to,
         from: selectedTransaction.from,
         value: amountToBalance(selectedTransaction.value),
       }
       : {
-        confirmations: selectedTransaction.confirmations, //for testing purposes
+        confirmations: selectedTransaction.confirmations, 
         to: selectedTransaction.inputs[0].address,
         from: selectedTransaction.outputs[0].address,
         value: convertSatoshiToBTC(selectedTransaction.outputs[0].value),

@@ -92,10 +92,10 @@ class TransactionItemContainer extends PureComponent {
 
     transactionDetailsRequest(hash)
       .then((result) => {
-        const thunkParams = { masterWalletAddress, selectedTransaction: result.payload.data }
-        blockchain === BLOCKCHAIN_ETHEREUM
-          ? thunkParams.selectedTransaction.confirmations = latestBlock - result.payload.data.blockNumber
-          : thunkParams.address = currentBTCWallet.address
+        const thunkParams = { masterWalletAddress, selectedTransaction: {...result.payload.data, latestBlock} }
+        blockchain === !BLOCKCHAIN_ETHEREUM
+          ? thunkParams.address = currentBTCWallet.address
+          : null
         transactionDetailsThunk(thunkParams)
           .then(() => {
             navigation.navigate('TransactionDetails', params)
