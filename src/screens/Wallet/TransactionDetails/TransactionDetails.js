@@ -68,7 +68,7 @@ export default class TransactionDetails extends PureComponent {
       <View style={styles.screenView}>        
         <View style={styles.transactionStatus}>
           <TransactionIcon
-            confirmations={confirmations}
+            confirmations={confirmations || 999} //for testing, need to discuss
             mode='big'
             type={type}
           />
