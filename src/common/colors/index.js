@@ -11,6 +11,7 @@ export default {
   mainGrey: '#333333', // duplicated foreground, according to style-guide
   greySub: '#808080',
   greySubLight: '#BFBFBF',
+  black: '#000000',
 
   dustygray: '#9997b2',
   lightpurple: '#786AB7',

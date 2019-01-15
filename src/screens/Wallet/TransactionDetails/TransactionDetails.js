@@ -15,16 +15,39 @@ import styles from './TransactionDetailsStyles'
 export default class TransactionDetails extends PureComponent {
 
   static propTypes = {
-    confirmations: PropTypes.number, //
+    confirmations: PropTypes.number,
     from: PropTypes.string,
     to: PropTypes.string,
-    selectedCurrency: PropTypes.string, //
-    token: PropTypes.string, //
+    selectedCurrency: PropTypes.string,
+    token: PropTypes.string,
     value: PropTypes.number,
-    tokenPrice: PropTypes.number, //
-    // fee: PropTypes.number,
-    date: PropTypes.string, //
+    tokenPrice: PropTypes.number,
+    date: PropTypes.string, 
+    type: PropTypes.string, 
   }
+
+  handleTransactionStatusRender = (confirmations) => {
+    if(confirmations <= 6){
+      return(
+        <LabeledItem
+          labelText='Estimate'
+          labelAlign='top'
+        >
+          <Text style={styles.lightGreyText}>
+            {`Up to 5-10 minutes(${confirmations}/6 Confirmations)`}
+          </Text>
+        </LabeledItem>
+      )
+    } else {
+      return(
+        <LabeledItem
+          labelText='Received'
+          labelAlign='left'
+        />
+      )
+    }
+  }
+
 
   render () {
     const {
@@ -36,12 +59,10 @@ export default class TransactionDetails extends PureComponent {
       value,
       tokenPrice,
       type,
-      // fee=0.00002,
       date,
     } = this.props
 
     const valueInCurrency = value * tokenPrice
-    // const feeInCurrency = fee * tokenPrice
 
     return (
       <View style={styles.screenView}>        
@@ -51,6 +72,9 @@ export default class TransactionDetails extends PureComponent {
             mode='big'
             type={type}
           />
+          <View style={styles.transactionProgress}>
+            {this.handleTransactionStatusRender(confirmations)}
+          </View>
         </View>
         <LabeledItem
           labelText='From'
@@ -77,17 +101,6 @@ export default class TransactionDetails extends PureComponent {
             {`${selectedCurrency} ${valueInCurrency}`}
           </Text>
         </LabeledItem>
-        {/* <LabeledItem
-          labelText='Fee'
-          labelAlign='top'
-        >
-          <Text>
-            {`${token} ${fee}`}
-            <Text style={styles.lightGreyText}>
-              {`(${selectedCurrency} ${feeInCurrency})`}
-            </Text>
-          </Text>
-        </LabeledItem> */}
         <LabeledItem
           labelText='Date'
           labelAlign='top'

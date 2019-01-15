@@ -21,6 +21,14 @@ export default StyleSheet.create({
   },
   transactionStatus: {
     padding: 10,
+    flexShrink: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  transactionProgress: {
+    flexShrink: 1,
+    marginHorizontal: 15,
+    flexDirection: 'row',
     alignItems: 'center',
   },
 })

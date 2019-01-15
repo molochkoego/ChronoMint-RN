@@ -35,6 +35,9 @@ class TransactionDetailsContainer extends PureComponent {
   static propTypes = {
     masterWalletAddress: PropTypes.string,
     currentBTCWallet: PropTypes.shape({}),
+    navigation: PropTypes.shape({}),
+    currentETHWallet: PropTypes.shape({}),
+    prices: PropTypes.shape({}),
   }
 
 
@@ -69,16 +72,16 @@ class TransactionDetailsContainer extends PureComponent {
       : BTC_PRIMARY_TOKEN
     const tokenPrice = prices && prices[token] && prices[token][selectedCurrency] || 0
     const { selectedTransaction } = currentWallet
-    const date = selectedTransaction && this.handleFormatDate(selectedTransaction.timestamp)
-    const transactionParams = selectedTransaction && blockchain === BLOCKCHAIN_ETHEREUM
+    const date = this.handleFormatDate(selectedTransaction.timestamp)
+    const transactionParams = blockchain === BLOCKCHAIN_ETHEREUM
       ? {
-        confirmations: selectedTransaction.confirmations || 999, //for testing purposes
+        confirmations: selectedTransaction.confirmations, //for testing purposes
         to: selectedTransaction.to,
         from: selectedTransaction.from,
         value: amountToBalance(selectedTransaction.value),
       }
       : {
-        confirmations: selectedTransaction.confirmations || 999, //for testing purposes
+        confirmations: selectedTransaction.confirmations, //for testing purposes
         to: selectedTransaction.inputs[0].address,
         from: selectedTransaction.outputs[0].address,
         value: convertSatoshiToBTC(selectedTransaction.outputs[0].value),

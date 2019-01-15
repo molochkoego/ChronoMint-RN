@@ -14,7 +14,7 @@ export default StyleSheet.create({
     paddingBottom: 30,
   },
   defaultText: {
-    color: colors.greySubLight,
+    color: colors.black,
     fontSize: 16,
     fontWeight: 'bold',
     lineHeight: 19,
