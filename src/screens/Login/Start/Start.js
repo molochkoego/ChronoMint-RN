@@ -15,8 +15,8 @@ import {
   FlatList,
 } from 'react-native'
 import { Formik } from 'formik'
+import { NavigationEvents } from 'react-navigation'
 import * as Yup from 'yup'
-import styles from './StartStyles'
 import {
   ChronoWalletIcon,
   ChronoWalletText,
@@ -29,7 +29,7 @@ import Separator from '../../../components/Separator'
 import i18n from '../../../locales/translation'
 import { MIN_PASSWORD_LENGTH } from '../../../common/constants/globals'
 import { headerHeight } from '../../../common/constants/screens'
-import { NavigationEvents } from 'react-navigation'
+import styles from './StartStyles'
 
 
 const CustomizedSeparator = () => <Separator style={styles.separator} />
@@ -42,6 +42,7 @@ export default class Start extends PureComponent {
     })),
     onClickUseExistingButton: PropTypes.func.isRequired,
     onClickCreateWalletButton: PropTypes.func.isRequired,
+    onToggleScreenContent: PropTypes.func.isRequired,
     onSelectPageContent: PropTypes.func.isRequired,
     showAccountsList: PropTypes.bool,
   }
