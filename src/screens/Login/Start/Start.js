@@ -29,6 +29,8 @@ import Separator from '../../../components/Separator'
 import i18n from '../../../locales/translation'
 import { MIN_PASSWORD_LENGTH } from '../../../common/constants/globals'
 import { headerHeight } from '../../../common/constants/screens'
+import { NavigationEvents } from 'react-navigation'
+
 
 const CustomizedSeparator = () => <Separator style={styles.separator} />
 
@@ -40,6 +42,8 @@ export default class Start extends PureComponent {
     })),
     onClickUseExistingButton: PropTypes.func.isRequired,
     onClickCreateWalletButton: PropTypes.func.isRequired,
+    onSelectPageContent: PropTypes.func.isRequired,
+    showAccountsList: PropTypes.bool,
   }
 
   keyExtractor = ({ address }) => address
@@ -188,42 +192,48 @@ export default class Start extends PureComponent {
     const keyboardVerticalOffset = -headerHeight
     const {
       showAccountsList,
+      onSelectPageContent,
     } = this.props
 
     return (
-      <TouchableWithoutFeedback
-        onPress={this.handleKeyboardDismiss}
-      >
-        <View style={styles.kavContainer}>
-          <KeyboardAvoidingView
-            behavior='position'
-            style={styles.container}
-            contentContainerStyle={styles.container}
-            keyboardVerticalOffset={keyboardVerticalOffset}
-          >
-            <View {...this.props} style={styles.inputsContainer}>
-              <Image
-                source={ChronoWalletIcon}
-                style={styles.logo}
-              />
-              <Image
-                source={ChronoWalletText}
-                style={styles.logoText}
-              />
+      <React.Fragment>
+        <NavigationEvents
+          onWillFocus={onSelectPageContent}
+        />
+        <TouchableWithoutFeedback
+          onPress={this.handleKeyboardDismiss}
+        >
+          <View style={styles.kavContainer}>
+            <KeyboardAvoidingView
+              behavior='position'
+              style={styles.container}
+              contentContainerStyle={styles.container}
+              keyboardVerticalOffset={keyboardVerticalOffset}
+            >
+              <View {...this.props} style={styles.inputsContainer}>
+                <Image
+                  source={ChronoWalletIcon}
+                  style={styles.logo}
+                />
+                <Image
+                  source={ChronoWalletText}
+                  style={styles.logoText}
+                />
+                {
+                  showAccountsList
+                    ? this.renderAccountsList()
+                    : this.renderCreateAccountForm()
+                }
+              </View>
+            </KeyboardAvoidingView>
+            <Text style={styles.copyright}>
               {
-                showAccountsList
-                  ? this.renderAccountsList()
-                  : this.renderCreateAccountForm()
+                i18n.t('StartPage.copyright')
               }
-            </View>
-          </KeyboardAvoidingView>
-          <Text style={styles.copyright}>
-            {
-              i18n.t('StartPage.copyright')
-            }
-          </Text>
-        </View>
-      </TouchableWithoutFeedback>
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
+      </React.Fragment>
     )
   }
 }

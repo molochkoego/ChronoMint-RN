@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch)
 class StartContainer extends PureComponent {
   constructor (props) {
     super(props)
-    this.state={
+    this.state = {
       showAccountsList: props.accounts && props.accounts.length !== 0,
     }
   }
@@ -37,6 +37,12 @@ class StartContainer extends PureComponent {
 
   handleUseExistingButtonClick = () => {
     this.props.navigation.navigate('ImportMethod')
+  }
+
+  handleSelectCurrentPageContent = () => {
+    const { accounts } = this.props
+    const showAccountsList = accounts && accounts.length !== 0 ? true : false
+    this.setState({ showAccountsList })
   }
 
   handleCreateWalletButtonClick = (values, { setSubmitting }) => {
@@ -70,6 +76,7 @@ class StartContainer extends PureComponent {
         accounts={accounts}
         showAccountsList={showAccountsList}
         onToggleScreenContent={this.handleContentToggle}
+        onSelectPageContent={this.handleSelectCurrentPageContent}
       />
     )
   }

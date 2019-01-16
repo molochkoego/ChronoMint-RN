@@ -24,6 +24,11 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '900',
   },
+  copyIcon: {
+    width: 32,
+    height: 32,
+    marginRight: 20,
+  },
   mnemonicContainer: {
     backgroundColor: colors.textContainer,
     marginHorizontal: 20,
