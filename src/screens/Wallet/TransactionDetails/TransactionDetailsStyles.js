@@ -19,6 +19,11 @@ export default StyleSheet.create({
   lightGreyText: {
     color: colors.greySub,
   },
+  statusLabel: {
+    fontSize: 16,
+    lineHeight: 19,
+    fontWeight: 'bold',
+  },
   transactionStatus: {
     padding: 10,
     flexShrink: 1,

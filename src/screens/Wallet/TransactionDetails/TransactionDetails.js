@@ -22,14 +22,14 @@ export default class TransactionDetails extends PureComponent {
     token: PropTypes.string,
     value: PropTypes.number,
     tokenPrice: PropTypes.number,
-    date: PropTypes.string, 
-    type: PropTypes.string, 
+    date: PropTypes.string,
+    type: PropTypes.string,
   }
 
   handleTransactionStatusRender = (confirmations) => {
-    const {type} = this.props
-    if(confirmations <= 6){
-      return(
+    const { type } = this.props
+    if (confirmations <= 6) {
+      return (
         <LabeledItem
           labelText='Estimate'
           labelAlign='top'
@@ -40,11 +40,10 @@ export default class TransactionDetails extends PureComponent {
         </LabeledItem>
       )
     } else {
-      return(
-        <LabeledItem
-          labelText={type === 'sending' ? 'Sent' : 'Received'}
-          labelAlign='left'
-        />
+      return (
+        <Text style={styles.statusLabel}>
+          {type === 'sending' ? 'Sent' : 'Received'}
+        </Text>
       )
     }
   }
@@ -66,7 +65,7 @@ export default class TransactionDetails extends PureComponent {
     const valueInCurrency = value * tokenPrice
 
     return (
-      <View style={styles.screenView}>        
+      <View style={styles.screenView}>
         <View style={styles.transactionStatus}>
           <TransactionIcon
             confirmations={confirmations}
